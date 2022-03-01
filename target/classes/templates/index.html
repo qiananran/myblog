@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" dir="ltr">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fzcl-首页</title>
+    <link href="../static/images/me.jpg" th:href="@{/images/me.jpg}" rel="icon" type="image/x-ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css" th:href="@{/lib/editormd/css/editormd.min.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/css/runbo.css" th:href="@{/css/runbo.css}">
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="../static/css/swiper.min.css" th:href="@{/css/swiper.min.css}">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+</head>
+<body>
+
+<!--导航-->
+<nav id="nav" class="gird-header" th:replace="_fragments :: menu(1)"></nav>
+<br>
+<br>
+<br>
+<br>
+<!--猜你喜欢-->
+<div class="m-padded-tb-large">
+    <div class="ui container">
+        <div class="ui red header secondary" style="font-size: 24px">
+            <i class="heartbeat red icon"></i>猜你喜欢
+        </div>
+    </div>
+    <br>
+    <!-- Swiper -->
+    <div class="swiper-container" >
+        <div class="swiper-wrapper" >
+            <div class="swiper-slide" th:each="blog : ${page.content}">
+                <img src="https://picsum.photos/id/800/200/300" th:src="@{${blog.firstPicture}}" style="height: 550px">
+                <a href="#" class="m-p" th:href="@{/blog/{id}(id=${blog.id})}" th:text="${blog.title}">这是标题</a>
+                <br>
+                <div class="m-btn">
+                    <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" class="m-a">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+</div>
+
+
+<!--中间内容-->
+<div class="m-padded-tb-large">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <div class="eleven wide column">
+                <!--博客内容-->
+                <div class="ui vertical segment">
+
+                    <div class="ui teal header secondary" style="font-size: 24px">
+                        <i class="bell icon"></i>全部文章
+                    </div>
+
+                    <!--博文列表-->
+                    <div class="ui padded segment m-padded-tb-large m-opacity m-hover" th:each="blog : ${page.content}">
+                        <div class="ui middle aligned mobile reversed stackable grid">
+                            <!--博文信息-->
+                            <div class="eleven wide column ">
+                                <h3 class="ui header" ><a href="#" target="_blank" class="m-black"  th:href="@{/blog/{id}(id=${blog.id})}" th:text="${blog.title}">自在独行</a></h3>
+                                <hr class="m-hr">
+                                <p class="m-text m-margin-top-max" th:text="|${blog.description}......|">好多人在说自己孤独，说自己孤独的人其实并不孤独。 孤独不是受到了冷落和遗弃，而是无知己，不被理解。 真正的孤独者不言孤独，偶尔作些长啸，如我们看到的兽。</p>
+                                <div class="ui m-margin-top-max grid">
+                                    <div class="eleven wide column">
+                                        <div class="ui mini horizontal link list">
+                                            <div class="item">
+                                                <img src="../static/images/me.jpg" th:src="@{${blog.user.avatar}}"  alt="" class="ui avatar image">
+                                                <div class="content"><a href="#" target="_blank" class="header" th:text="${blog.user.nickname}">zzzz</a></div>
+                                            </div>
+                                            <div class="item">
+                                                <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2020-01-01</span>
+                                            </div>
+                                            <div class="item">
+                                                <i class="eye icon"></i> <span th:text="${blog.views}">2222</span>
+                                            </div>
+                                            <div class="item">
+                                                <i class="comment outline icon"></i> <span th:text="${blog.commentCount}">2222</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="right aligned five wide column">
+                                        <a href="#"  target="_blank" class="ui teal basic label m-padded-tiny m-text-thin" th:text="${blog.type.name}">类型</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--博文图片-->
+                            <div class="five wide column">
+                                <a href="#" target="_blank">
+                                    <img src="../static/images/backimg1.jpg" th:src="@{${blog.firstPicture}}" alt="" class="ui rounded image">
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--博文列表-->
+                    <!--分页-->
+                    <div class="ui bottom segment m-opacity stackable grid" th:if="${page.totalPages}>1">
+                        <div class="three wide column" align="center">
+                            <a class="item" th:href="@{/index(page=${page.number}-1)}"  th:unless="${page.first}">上一页</a>
+                        </div>
+
+                        <div class="ten wide column" align="center">
+                            <p> <span></span> / <span></span> </p>
+                        </div>
+
+                        <div class="three wide column" align="center">
+                            <a class="item" th:href="@{/index(page=${page.number}+1)}"  th:unless="${page.last}">下一页</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="five wide column">
+                <!--分类-->
+                <div class="ui vertical segment">
+                    <div class="ui m-container-small m-opacity">
+                        <div class="ui teal header secondary" style="font-size: 18px">
+                            <i class="archive icon"></i>分类
+                        </div>
+                    </div>
+                    <br/>
+                    
+                    <div class="ui teal segment m-hover2">
+                        <div class="ui fluid vertical menu" >
+                            <a  th:href="@{/types/{id}(id=${type.id})}"  class="item"  th:each="type : ${types}">
+                                <span th:text="${type.name}">学习日志</span>
+                                <!--<div class="ui blue basic left pointing label"></div>-->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+
+                <!-- 标签-->
+                <div class="ui vertical segment">
+                    <div class="ui m-container-small m-opacity">
+                        <div class="ui teal header secondary" style="font-size: 18px">
+                            <i class="tags icon"></i>标签
+                        </div>
+                    </div>
+                    <div class="ui teal segment m-hover2">
+                        <a  th:href="@{/tags/{id}(id=${tag.id})}"  class="ui blue basic left pointing label m-margin-tb-tiny" th:each="tag : ${tags}">
+                            <span th:text="${tag.name}">方法论</span>
+                            <!--<div class="detail"></div>-->
+                        </a>
+                    </div>
+                </div>
+
+<!--                二维码-->
+                <h4 class="ui horizontal divider teal header m-margin-top-large">关注我</h4>
+                <!--个人简介-->
+                <div class="ui card fluid ">
+                    <div class="" style="border-radius: 25px">
+
+                    </div>
+                    <div class="content image site-author">
+                        <img class="m-image" src="http://q1.qlogo.cn/g?b=qq&nk=3465615034&s=100">
+                        <br/>
+                        <br/>
+                        <a class="header">Fzcl</a>
+                        <div class="meta">
+                            <span class="date">Just a coder</span>
+                        </div>
+                        <div class="description">
+                            <p>妈妈，我会在夏天开放吗</p>
+                            <p>像你曾经的容颜那样</p>
+                            <p>妈妈，这种失落会持久吗</p>
+                            <p>忘记一些隐秘的委屈</p>
+                            <p>在回头观望的时候丢失了自己</p>
+                            <p>我那不受把握的身体</p>
+                        </div>
+                    </div>
+                    <div class="extra content links-of-author">
+                        <!--<a class="ui circular github icon button" data-content="https://github.com/codemusik" data-position="bottom left"><i class="github icon"></i></a>-->
+                        <a class="ui wechat circular icon button"><i class="weixin icon"></i></a>
+                        <a href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1228462329&amp;fuin=%20&amp;website=&amp;Site=%E5%9C%A8%E7%BA%BF%E5%AE%A2%E6%9C%8D&amp; Menu=yes" data-content="点击跳转到QQ" class="ui qq circular icon button" data-position="bottom center"><i class="qq icon"></i></a>
+                        <a href="https://github.com/qiananran/" target="_blank" class="ui github circular icon button" data-content="点击跳转GitHub" data-position="bottom center"><i class="github icon"></i></a>
+                        <a href="https://blog.csdn.net/Dreamingalong/" target="_blank" class="ui csdn circular icon button" data-content="点击跳转CSDN" data-position="bottom center"><i class="copyright outline icon"></i></a>
+                        <a href="mailto:1228462329@qq.com" class="ui email circular icon button" data-content="1228462329@qq.com" data-position="bottom center"><i class="envelope  icon"></i></a>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <br/>
+        </div>
+    </div>
+</div>
+
+
+<!--置顶图标-->
+<div class="m-padded-tb-large m-fixed m-right-bottom">
+    <a href="#" class="ui icon button"><i class="chevron up icon"></i> </a>
+</div>
+
+
+
+<br>
+<br>
+<br>
+<!--底部栏-->
+<footer class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="four wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/images/wechat.png" th:src="@{/images/wechat.png}"  class="ui rounded image" alt="" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced ">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item m-text-thin">Email：Dyilin@163.com</a>
+                    <a href="#" class="item m-text-thin">QQ：3465615034</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced ">Blog</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">这是我们的博客、会分享关于编程、写作、思考相关的任何内容，希望可以给来到这儿的人有所帮助...</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2020 - <span>2020</span> Designed by Fzcl</p>
+        <div class="ui inverted link horizontal list">
+            <img class="item ui image" th:src="@{/images/beian.png}">
+            <a class="item m-text-thin" style="vertical-align: middle" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11011202002032" target="_blank">
+                <span>赣公网安备 11011202002032号</span>
+            </a>
+            <a class="item m-text-thin" style="vertical-align: middle" href="http://www.beian.miit.gov.cn/" target="_blank">
+                <span>赣ICP备19058801号</span>
+            </a>
+        </div>
+    </div>
+
+</footer>
+
+
+
+<script src="../static/js/jquery-3.5.1.min.js" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<!-- Swiper JS -->
+<script src="../static/js/swiper.min.js" th:src="@{/js/swiper.min.js}"></script>
+<script>
+
+    // $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+
+
+
+    <!-- Initialize Swiper -->
+    var swiper = new Swiper('.swiper-container', {
+        pagination : '.swiper-pagination',
+        loop: true,
+        autoplay : 3000,
+        speed:300,
+    });
+
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-show');
+
+    });
+
+
+    // 显示微信
+    $('.wechat').popup({
+        popup : $('.wechat-qr'),
+        position: 'bottom center'
+    });
+
+    // 显示QQ
+    $('.qq').popup({
+        /*popup : $('.qq-qr'),
+        position: 'bottom center'*/
+    });
+
+    // 显示邮箱
+    $('.email').popup();
+
+    // 显示CSDN
+    $('.csdn').popup();
+
+    // 显示github
+    $('.github').popup();
+
+
+
+
+
+
+</script>
+</body>
+</html>

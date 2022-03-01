@@ -1,0 +1,34 @@
+.swiper-container {
+    width: 990px;
+    height: 550px;
+    border-radius: 25px;
+}
+.m-p{
+    position: absolute;
+    font-size: 35px;
+    bottom: 145px;
+    left: 60px;
+    color: white;
+}
+.m-p:hover{
+    color: white;
+}
+.m-btn{
+    position: absolute;
+    width: 95px;
+    height: 36px;
+    border-radius: 20px;
+    background-color: rgb(229,77,66);
+    bottom: 80px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.m-a:hover{
+    color: white;
+}
+.m-a{
+    text-decoration: none;
+    color: white;
+}
